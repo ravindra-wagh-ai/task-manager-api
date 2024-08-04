@@ -3,3 +3,6 @@
 
 ## Entity Relationship Diagram
 ![My animated logo](/taskmgr.png)
+
+## Architectural Diagram
+![My animated logo](/archtecture.png)
