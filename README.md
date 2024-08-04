@@ -5,4 +5,4 @@
 ![My animated logo](/taskmgr.png)
 
 ## Architectural Diagram
-![My animated logo](/archtecture.png)
+![My animated logo](/archtecture.svg)
