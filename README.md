@@ -1,1 +1,1 @@
-<img src="/task-manager-api/blob/main/taskmgr.png" width="128"/>
+<img src="/blob/main/taskmgr.png" width="128"/>
