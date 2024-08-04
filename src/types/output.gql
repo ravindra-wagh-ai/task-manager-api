@@ -1,0 +1,13 @@
+type SingUp {
+  id: Int
+  type: String
+  firstname: String
+  lastname: String
+  email: String
+  callingcode: String
+  mobile: String
+}
+
+type SignIn {
+  token: String
+}

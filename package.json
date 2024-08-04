@@ -1,0 +1,47 @@
+{
+  "name": "task-service",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "dist/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "build": "tsc && tsc-esm-fix --src='src/**/*.js'",
+    "clean": "tsc --build --clean"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Ravindra Wagh",
+    "email": "ravindra.wagh@live.in",
+    "phone": "+91 99043 77726"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@graphql-tools/schema": "^10.0.3",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "device-detector-js": "^3.0.3",
+    "dotenv": "^16.4.2",
+    "express": "^4.18.2",
+    "graphql-constraint-directive": "^5.4.2",
+    "graphql-yoga": "^5.1.1",
+    "jsonwebtoken": "^9.0.2",
+    "node-fetch": "^3.3.2",
+    "pg": "^8.11.5",
+    "request-ip": "^3.3.0",
+    "string-format": "^2.0.0",
+    "uid": "^2.0.2",
+    "user-agent": "^1.0.4"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/node": "^20.11.24",
+    "@types/pg": "^8.11.2",
+    "@types/request-ip": "^0.0.41",
+    "@types/string-format": "^2.0.3",
+    "tsc-esm-fix": "^2.20.26",
+    "typescript": "^5.3.3"
+  }
+}

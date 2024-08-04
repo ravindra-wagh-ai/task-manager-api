@@ -1,0 +1,7 @@
+type Query {
+  signin(input: InputSignIn!): SignIn
+}
+
+type Mutation {
+  signup(input: SignUp!): SingUp
+}
