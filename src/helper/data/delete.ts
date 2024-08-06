@@ -1,37 +1,22 @@
-import env from "dotenv";
-import format from "string-format";
-import service_token from "./service_token";
-import api from "./api";
+import pgql from "./pgql";
+import Delete from "../../models/delete";
 
-env.config();
-
-export default async (args: any): Promise<object> => {
-  let rowId = null;
+export default async (args: Delete): Promise<object> => {
+  let row: object;
   try {
-    let { table, criteria } = args;
-    let input = {
-      table: table,
-      criteria: criteria,
-    };
-
-    let gql = {
-      query: "query($input: Delete) { delete (input: $input) }",
-      variables: { input: input },
-    };
-    let token = service_token.get();
-    let headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    };
-    let url = format(process.env.BASE_URL as string, process.env.DATA as string);
-    let result = await api(url, gql, headers);
-
-    if (result.data.delete !== null) {
-      rowId = result.data.delete;
+    let query = `DELETE FROM ${args.table}`;
+    if (args.criteria !== undefined) {
+      query = `${query} WHERE ${args.criteria}`;
+    }
+    query += " RETURNING *";
+    let result = await pgql.write(query, args.values);
+    console.log(result);
+    if (result !== undefined) {
+      row = result.rows.shift();
     }
   } catch (e) {
     console.log(e);
     throw e;
   }
-  return rowId;
+  return row!;
 };

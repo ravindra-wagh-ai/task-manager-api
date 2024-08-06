@@ -1,25 +1,17 @@
-import env from "dotenv";
-import format from "string-format";
-import service_token from "./service_token";
-import api from "./api.js";
-env.config();
-
-export default async (args: any): Promise<object> => {
+import Update from "../../models/update";
+import pgql from "./pgql";
+export default async (input: Update): Promise<object> => {
   let row: object;
   try {
-    let gql = {
-      query: "mutation ($input: Update!) { update (input: $input) }",
-      variables: { input: args },
-    };
-    let token = service_token.get();
-    let headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    };
-    let url = format(process.env.BASE_URL as string, process.env.DATA as string);
-    let result = await api(url, gql, headers);
-    if (result.data !== null && result.data.update !== null) {
-      row = result.data.update;
+    let query = `UPDATE  ${input.table} SET ${input.columns?.join(",")}`;
+    if (input.criteria !== undefined) {
+      query = `${query} WHERE ${input.criteria}`;
+    }
+    query += " RETURNING *";
+    let result = await pgql.write(query, input.values);
+    console.log(result);
+    if (result !== undefined) {
+      row = result.rows.shift();
     }
   } catch (e) {
     console.log(e);

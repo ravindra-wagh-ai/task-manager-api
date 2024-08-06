@@ -1,26 +1,14 @@
-import format from "string-format";
-import api from "./api.js";
-import service_token from "./service_token.js";
+import pgql from "./pgql";
 export default async (table: string): Promise<any[]> => {
   let list: object[] = [];
   try {
-    let gql = {
-      query: "query ($table: String!) { columns (table: $table) {  name type } }",
-      variables: { table: table },
-    };
-    let token = service_token.get();
-    let headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    };
+    let query = "select * from view_columns WHERE table_name = $1";
 
-    let url = format(process.env.BASE_URL as string, process.env.DATA as string);
-    let result = await api(url, gql, headers);
-    let rows = [];
-    if (result.data.columns !== null) {
-      rows = result.data.columns;
+    let result = await pgql.read(query, [table]);
+    console.log(result);
+    if (result !== undefined) {
+      list = result.rows;
     }
-    return rows;
   } catch (e) {
     throw e;
   }

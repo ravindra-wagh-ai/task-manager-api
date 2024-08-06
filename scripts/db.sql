@@ -36,3 +36,33 @@ CREATE TABLE tasks
 
 COMMENT ON COLUMN public.tasks.status
     IS 'OPEN, IN-PROGRESS, DONE';
+
+-- Table: public.auditlogs
+-- DROP TABLE IF EXISTS public.auditlogs;
+
+CREATE TABLE IF NOT EXISTS public.auditlogs
+(
+    id character varying(8) NOT NULL,
+    originator_type character varying(10),
+    originator bigint,
+    source character varying(10) NOT NULL,
+    url text,
+    referer text,
+    type character varying(15),
+    method text,
+    device text,
+    browser text,
+    brand text,
+    ip character varying(30),
+    starttime timestamp without time zone,
+    endtime timestamp without time zone,
+    createdat timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    status character varying(15) NOT NULL DEFAULT 'NONE'::character varying,
+    duration numeric GENERATED ALWAYS AS (EXTRACT(epoch FROM (endtime - starttime))) STORED,
+    comment text,
+    CONSTRAINT auditlogs_pkey PRIMARY KEY (id),
+    CONSTRAINT auditlogs_originator_fkey FOREIGN KEY (originator)
+        REFERENCES public.users (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
