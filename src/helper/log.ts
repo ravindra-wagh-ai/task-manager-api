@@ -1,6 +1,9 @@
 import { uid } from "uid";
 import data from "./data/index";
 import Insert from "../models/insert";
+import Column from "../models/column";
+import Update from "../models/update";
+import { COP } from "../models/cop";
 export default {
   add: async (row: any): Promise<string> => {
     let id: string;
@@ -13,8 +16,9 @@ export default {
       values.push(newId);
       let args: Insert = {
         table: table,
-        columns: columns as [string],
-        values: values as [any],
+        columns: columns.map((k) => {
+          return { name: k, value: row[k] } as Column;
+        }),
       };
 
       let result = (await data.insert(args)) as any;
@@ -30,14 +34,16 @@ export default {
     let id: string;
     let table = "auditlogs";
     try {
-      let args = {
+      let columns = Object.keys(row);
+      let args: Update = {
         table: table,
-        columns: Object.keys(row),
-        values: Object.values(row),
+        columns: columns.map((k) => {
+          return { name: k, value: row[k] } as Column;
+        }),
         criteria: [
           {
             column: "id",
-            cop: "eq",
+            cop: COP.eq,
             value: rowId,
           },
         ],

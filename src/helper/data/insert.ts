@@ -4,13 +4,19 @@ export default async (args: Insert): Promise<object> => {
   let row: object;
   try {
     let params = [];
-    for (let i = 1; i <= args.columns.length; i++) {
-      params.push(`$${i}`);
+    let columns: string[] = [];
+    let values: any[] = [];
+    let p = 1;
+    for (let column of args.columns) {
+      columns.push(column.name as string);
+      params.push(`$${p}`);
+      values.push(column.value);
+      p++;
     }
 
-    let query = `INSERT INTO ${args.table} (${args.columns?.join(",")})`;
+    let query = `INSERT INTO ${args.table} (${columns.join(",")}) `;
     query += `VALUES(${params.join(",")}) RETURNING *`;
-    let result = await pgql.write(query, args.values);
+    let result = await pgql.write(query, values);
     console.log(result);
     if (result !== undefined) {
       row = result.rows.shift();

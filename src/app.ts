@@ -94,7 +94,7 @@ const yoga = createYoga({
     resolvers: resolvers,
   }),
   plugins: [handler(), createEnvelopQueryValidationPlugin()],
-  graphqlEndpoint: "/identity",
+  graphqlEndpoint: "/taskapi",
   maskedErrors: {
     maskError(e) {
       let gqle = e as GraphQLError;
@@ -114,7 +114,7 @@ app.use(async (req: Request, res: Response, next: NextFunction) => {
   req.headers.xip = r_ip;
   next();
 });
-app.use("/identity", yoga);
+app.use("/taskapi", yoga);
 app.listen(process.env.PORT, async () => {
   console.log(`🚀 server started at port ${process.env.PORT}`);
 });

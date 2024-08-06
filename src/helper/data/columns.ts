@@ -3,7 +3,6 @@ export default async (table: string): Promise<any[]> => {
   let list: object[] = [];
   try {
     let query = "select * from view_columns WHERE table_name = $1";
-
     let result = await pgql.read(query, [table]);
     console.log(result);
     if (result !== undefined) {

@@ -1,5 +1,6 @@
+import Column from "./column";
+
 export default class Insert {
   public table?: string;
-  public columns!: [string];
-  public values?: [any];
+  public columns!: Column[];
 }
