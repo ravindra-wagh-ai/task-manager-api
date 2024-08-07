@@ -25,11 +25,10 @@ export default async (args: Update): Promise<object> => {
         values.push(c.value);
         p++;
       });
-      query += `WHERE ${criteria.join(",")}`;
+      query += ` WHERE ${criteria.join(",")}`;
     }
     query += " RETURNING *";
     let result = await pgql.write(query, values);
-    console.log(result);
     if (result !== undefined) {
       row = result.rows.shift();
     }

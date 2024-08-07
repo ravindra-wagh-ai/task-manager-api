@@ -33,7 +33,7 @@ function handler(): Plugin {
       if (ip !== undefined && ip !== null) {
         request.headers.set("x-ip", ip);
       }
-      
+
       if (!query?.query.includes("IntrospectionQuery")) {
         let method = helper.get.method(query?.query);
         let logger = {

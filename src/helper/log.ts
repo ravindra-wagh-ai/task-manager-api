@@ -10,17 +10,15 @@ export default {
     let newId = uid(8);
     let table = "auditlogs";
     try {
-      let columns = Object.keys(row);
-      columns.push("id");
-      let values = Object.values(row);
-      values.push(newId);
+      let keys = Object.keys(row);
+      let columns = keys.map((k) => {
+        return { name: k, value: row[k] };
+      });
+      columns.push({ name: "id", value: newId });
       let args: Insert = {
         table: table,
-        columns: columns.map((k) => {
-          return { name: k, value: row[k] } as Column;
-        }),
+        columns: columns,
       };
-
       let result = (await data.insert(args)) as any;
       if (result !== null) {
         id = result?.id;

@@ -17,7 +17,6 @@ export default async (args: Insert): Promise<object> => {
     let query = `INSERT INTO ${args.table} (${columns.join(",")}) `;
     query += `VALUES(${params.join(",")}) RETURNING *`;
     let result = await pgql.write(query, values);
-    console.log(result);
     if (result !== undefined) {
       row = result.rows.shift();
     }
