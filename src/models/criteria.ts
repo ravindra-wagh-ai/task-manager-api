@@ -5,5 +5,5 @@ export default class Criteria {
   public column?: string;
   public cop?: COP;
   public lop?: LOP;
-  public value?: string;
+  public value?: any;
 }

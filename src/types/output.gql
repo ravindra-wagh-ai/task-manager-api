@@ -11,3 +11,14 @@ type SingUp {
 type SignIn {
   token: String
 }
+
+type Task {
+  id: Int
+  title: String
+  description: String
+  dedline: String
+  startedat: String
+  completed: String
+  userid: Int
+  user: String
+}
