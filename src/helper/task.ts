@@ -8,31 +8,32 @@ import Update from "../models/update";
 import Column from "../models/column";
 import { STATUS } from "../models/status";
 import Delete from "../models/delete";
+const get = async (id: number): Promise<any> => {
+  let row: Object;
+  try {
+    let columns = await data.columns("view_task_list");
+    let input: Select = {
+      table: "view_task_list",
+      columns: columns.map((x) => {
+        return { name: x.name };
+      }),
+      criteria: [
+        {
+          column: "id",
+          cop: COP.eq,
+          value: id,
+        },
+      ],
+    };
+    let rows = await data.select(input);
+    row = rows.shift();
+  } catch (e) {}
+  return row!;
+};
 export default {
-  get: async (id: number): Promise<any> => {
-    let row: Object;
-    try {
-      let columns = await data.columns("tasks");
-      let input: Select = {
-        table: "users",
-        columns: columns.map((x) => {
-          return { name: x.name };
-        }),
-        criteria: [
-          {
-            column: "id",
-            cop: COP.eq,
-            value: id,
-          },
-        ],
-      };
-      let rows = await data.select(input);
-      row = rows.shift();
-    } catch (e) {}
-    return row!;
-  },
+  get: get,
   list: async (criteria: Criteria[]): Promise<any> => {
-    let rows: any[]=[];
+    let rows: any[] = [];
     try {
       let columns = await data.columns("view_task_list");
       let input: Select = {

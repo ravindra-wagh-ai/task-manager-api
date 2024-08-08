@@ -17,10 +17,11 @@ type Task {
   title: String
   description: String
   deadline: Date
-  startedat: String
-  completed: String
+  startedat: Date
+  completed: Date
   userid: Int
   username: String
   status: String
   ago: JSON
+  createdat: Date
 }

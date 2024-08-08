@@ -4,6 +4,7 @@ import { GraphQLError } from "graphql";
 import jwt from "jsonwebtoken";
 export default async (_: any, args: { input: Task }, ctx: any): Promise<any> => {
   let state: any;
+  let row:any;
   let authorization = ctx.req.headers["authorization"];
   let user:any;
   try {
@@ -14,6 +15,7 @@ export default async (_: any, args: { input: Task }, ctx: any): Promise<any> => 
     }
     
     state = await helper.task.add(args.input);
+    row = await helper.task.get(state?.id);
   } catch (e: any) {
     throw new GraphQLError("Unable to create task", {
       extensions: {
@@ -24,5 +26,5 @@ export default async (_: any, args: { input: Task }, ctx: any): Promise<any> => 
       },
     });
   }
-  return state;
+  return row;
 };
