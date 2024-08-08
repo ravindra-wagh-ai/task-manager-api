@@ -1,7 +1,7 @@
 import { Plugin } from "graphql-yoga";
 import DeviceDetector from "device-detector-js";
 import helper from "./helper/index";
-
+import jwt from "jsonwebtoken";
 export default function(): Plugin  {
     return {
       async onRequest({ request, serverContext, fetchAPI, endResponse }) {
@@ -9,7 +9,8 @@ export default function(): Plugin  {
         let readableState = body._readableState;
         let data = Buffer.from(readableState?.buffer[0]).toString();
         let query = JSON.parse(data);
-  
+        let originator_type = null;
+        let originator = null;
         let headers = request.headers;
         let url: string = request.url;
         let referer: string = headers.get("referer") as string;
@@ -26,7 +27,13 @@ export default function(): Plugin  {
         }
        
         if (!query?.query.includes("IntrospectionQuery")) {
-          
+          let authorization = headers.get("authorization") as string;
+          if(authorization !== undefined){
+            let token:string = authorization.replace("Bearer","").trim();
+            let user:any = jwt.decode(token);
+            originator_type =user?.type;
+            originator = user?.id;
+          }
           let method = helper.get.method(query?.query);
           let logger = {
             url: url,
@@ -36,8 +43,8 @@ export default function(): Plugin  {
             brand: device.device?.brand,
             source: "API",
             method: method,
-            originator_type: null,
-            originator: null,
+            originator_type: originator_type,
+            originator: originator,
             starttime: new Date().toISOString(),
             ip: ip,
             //"request": Buffer.from(JSON.stringify(query)).toString("base64"),
