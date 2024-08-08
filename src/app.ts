@@ -1,28 +1,10 @@
 import express, { Express, NextFunction, Request, Response } from "express";
-import { createYoga, createSchema, maskError } from "graphql-yoga";
-import { GraphQLError } from "graphql";
-import { createEnvelopQueryValidationPlugin } from "graphql-constraint-directive";
 import env from "dotenv";
 import requestIp from "request-ip";
-import typeDefs from "./types/index";
-import resolvers from "./resolvers/index";
-import handler from "./handler";
+import yoga from "./yoga";
 const app: Express = express();
 env.config();
-const yoga = createYoga({
-  schema: createSchema({
-    typeDefs: typeDefs,
-    resolvers: resolvers,
-  }),
-  plugins: [handler(), createEnvelopQueryValidationPlugin()],
-  graphqlEndpoint: "/taskapi",
-  maskedErrors: {
-    maskError(e) {
-      let gqle = e as GraphQLError;
-      return maskError(gqle.extensions.originalError, gqle.message, true);
-    },
-  },
-});
+
 app.get("/", async (req: Request, res: Response) => {
   res.json({ status: "it work's" });
 });
