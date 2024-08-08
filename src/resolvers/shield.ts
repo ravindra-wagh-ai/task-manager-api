@@ -6,30 +6,30 @@ import deleteTask from "./delete";
 import list from "./list";
 import { GraphQLError } from "graphql";
 import jwt from "jsonwebtoken";
-const stacklist: any[] = [
+const resolvers: any[] = [
   {
     name: "add",
-    call: add,
+    execute: add,
   },
   {
     name: "update",
-    call: update,
+    execute: update,
   },
   {
     name: "delete",
-    call: deleteTask,
+    execute: deleteTask,
   },
   {
     name: "tasks",
-    call: list,
+    execute: list,
   },
   {
     name: "signin",
-    call: signin,
+    execute: signin,
   },
   {
     name: "signup",
-    call: signup,
+    execute: signup,
   },
 ];
 export default async (parent: any, args: any, ctx: any, info: any) => {
@@ -61,7 +61,7 @@ export default async (parent: any, args: any, ctx: any, info: any) => {
         },
       });
     }
-    let active = stacklist.find((x) => x.name === field);
-    return await active.call(parent, args, ctx, info);
+    let resolver = resolvers.find((x) => x.name === field);
+    return await resolver.execute(parent, args, ctx, info);
   }
 };
