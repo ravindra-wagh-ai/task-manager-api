@@ -4,7 +4,6 @@ export default async (table: string): Promise<any[]> => {
   try {
     let query = "select * from view_columns WHERE table_name = $1";
     let result = await pgql.read(query, [table]);
-    console.log(result);
     if (result !== undefined) {
       list = result.rows;
     }

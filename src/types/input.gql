@@ -22,21 +22,21 @@ input DateFilter {
 input TaskFilter {
   id: Int
   title: String!
-  dedline: DateFilter!
+  deadline: DateFilter!
   startedat: DateFilter!
   completedat: DateFilter
 }
 
 input NewTask {
-  title: String! @constraint(pattern: "^[0-9a-zA-Z\\s]*$", maxLength: 100)
+  title: String! @constraint(pattern: "^[0-9a-zA-Z\\s]*$", minLength: 1, maxLength: 100)
   description: String
-  dedline: Date!
+  deadline: String! @constraint(pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}$", minLength: 10, maxLength: 10)
 }
 
 input UpdateTask {
   id: Int!
   title: String! @constraint(pattern: "^[0-9a-zA-Z\\s]*$", maxLength: 100)
   description: String @constraint(pattern: "^[0-9a-zA-Z\\s]*$")
-  dedline: Date!
+  deadline: Date!
   status: Status
 }

@@ -18,10 +18,9 @@ export default async (args: Select): Promise<any> => {
         values.push(c.value);
         p++;
       });
-      `${query} WHERE ${criteria.join(",")}`;
+      query += ` WHERE ${criteria.join(",")}`;
     }
-    let result = await pgql.read(query);
-    console.log(result);
+    let result = await pgql.read(query, values);
     if (result !== undefined) {
       rows = result.rows;
     }

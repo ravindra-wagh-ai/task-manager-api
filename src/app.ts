@@ -33,8 +33,9 @@ function handler(): Plugin {
       if (ip !== undefined && ip !== null) {
         request.headers.set("x-ip", ip);
       }
-
+     
       if (!query?.query.includes("IntrospectionQuery")) {
+        
         let method = helper.get.method(query?.query);
         let logger = {
           url: url,
@@ -76,7 +77,7 @@ function handler(): Plugin {
       }
 
       let logId = request.headers.get("logid");
-      console.log("logid:", logId);
+      //console.log("logid:", logId);
       if (logId !== null) {
         let logger = {
           endtime: new Date(),

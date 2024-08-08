@@ -1,17 +1,14 @@
-import signup from "./signup";
-import signin from "./signin";
-import add from "./add";
-import update from "./update";
-import deleteTask from "./delete";
+import shield from "./shield";
 const resolvers = {
   Query: {
-    signin: signin,
+    signin: shield,
+    tasks: shield,
   },
   Mutation: {
-    signup: signup,
-    add: add,
-    update: update,
-    delete: deleteTask,
+    signup: shield,
+    add: shield,
+    update: shield,
+    delete: shield,
   },
 };
 export default resolvers;

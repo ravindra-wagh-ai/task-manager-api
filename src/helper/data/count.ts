@@ -18,7 +18,6 @@ export default async (args: Count): Promise<number> => {
     });
   }
   let result = await pgql.read(query, values);
-  console.log(result);
   if (result !== undefined) {
     rows = result.rows.shift().count;
   }

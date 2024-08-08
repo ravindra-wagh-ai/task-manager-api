@@ -1,20 +1,28 @@
 import Task from "../models/task";
+import helper from "../helper/index";
 import { GraphQLError } from "graphql";
-export default async (
-  _: any,
-  args: { input: Task },
-  ctx: any
-): Promise<any> => {
-  let authorization: string | undefined = ctx?.req.headers["authorization"];
-  console.log(authorization);
-  if (authorization === undefined) {
-    throw new GraphQLError("An error occured", {
+import jwt from "jsonwebtoken";
+export default async (_: any, args: { input: Task }, ctx: any): Promise<any> => {
+  let state: any;
+  let authorization = ctx.req.headers["authorization"];
+  let user:any;
+  try {
+    if(authorization!== undefined){
+      let token = authorization.replace("Bearer","").trim();
+      user = jwt.decode(token);
+      args.input.userid = user.id
+    }
+    
+    state = await helper.task.add(args.input);
+  } catch (e: any) {
+    throw new GraphQLError("Unable to create task", {
       extensions: {
         originalError: {
-          code: 400,
-          message: "missing authorization token",
+          code: 500,
+          message: e.message,
         },
       },
     });
   }
+  return state;
 };

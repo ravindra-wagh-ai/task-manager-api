@@ -32,20 +32,21 @@ export default {
     return row!;
   },
   list: async (criteria: Criteria[]): Promise<any> => {
-    let rows: any[];
+    let rows: any[]=[];
     try {
-      let columns = await data.columns("tasks");
+      let columns = await data.columns("view_task_list");
       let input: Select = {
-        table: "tasks",
+        table: "view_task_list",
         columns: columns.map((x) => {
           return { name: x.name };
         }),
         criteria: criteria,
       };
-      let rows = await data.select(input);
-      rows = rows;
-    } catch (e) {}
-    return rows!;
+      rows = await data.select(input);
+    } catch (e) {
+      console.log(e);
+    }
+    return rows;
   },
   add: async (args: Task) => {
     let input: Insert = {
@@ -60,8 +61,8 @@ export default {
           value: args?.description,
         },
         {
-          name: "dedline",
-          value: args?.dedline,
+          name: "deadline",
+          value: args?.deadline,
         },
         {
           name: "userid",
@@ -70,7 +71,6 @@ export default {
       ],
     };
     let result = await data.insert(input);
-    console.log(result);
     return result;
   },
   update: async (args: Task) => {
@@ -87,10 +87,10 @@ export default {
         value: args.description,
       });
     }
-    if (args.dedline !== undefined) {
+    if (args.deadline !== undefined) {
       columns.push({
         name: "dedline",
-        value: args.dedline,
+        value: args.deadline,
       });
     }
     switch (args.status) {
@@ -120,7 +120,6 @@ export default {
       ],
     };
     let result = await data.update(input);
-    console.log(result);
     return result;
   },
   delete: async (id: number) => {
@@ -135,7 +134,6 @@ export default {
       ],
     };
     let result = await data.delete(input);
-    console.log(result);
     return result;
   },
 };

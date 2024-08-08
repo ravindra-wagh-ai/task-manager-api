@@ -7,7 +7,7 @@ export default async (id: number): Promise<Result> => {
     result.code = 1234;
     result.success = false;
     result.success = false;
-    result.message = "id should not be greater than zero";
+    result.message = "id must be greater than zero";
   }
   return result;
 };

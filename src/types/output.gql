@@ -16,9 +16,11 @@ type Task {
   id: Int
   title: String
   description: String
-  dedline: String
+  deadline: Date
   startedat: String
   completed: String
   userid: Int
-  user: String
+  username: String
+  status: String
+  ago: JSON
 }
