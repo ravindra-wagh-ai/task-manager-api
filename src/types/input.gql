@@ -21,9 +21,9 @@ input DateFilter {
 
 input TaskFilter {
   id: Int
-  title: String!
-  deadline: DateFilter!
-  startedat: DateFilter!
+  title: String
+  deadline: DateFilter
+  startedat: DateFilter
   completedat: DateFilter
 }
 
@@ -36,7 +36,7 @@ input NewTask {
 input UpdateTask {
   id: Int!
   title: String! @constraint(pattern: "^[0-9a-zA-Z\\s]*$", maxLength: 100)
-  description: String @constraint(pattern: "^[0-9a-zA-Z\\s]*$")
+  description: String
   deadline: Date!
   status: Status
 }

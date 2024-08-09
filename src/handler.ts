@@ -28,7 +28,7 @@ export default function(): Plugin  {
        
         if (!query?.query.includes("IntrospectionQuery")) {
           let authorization = headers.get("authorization") as string;
-          if(authorization !== undefined){
+          if(authorization !== null){
             let token:string = authorization.replace("Bearer","").trim();
             let user:any = jwt.decode(token);
             originator_type =user?.type;

@@ -66,3 +66,32 @@ CREATE TABLE IF NOT EXISTS public.auditlogs
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )
+
+-- View: public.view_columns
+-- DROP VIEW public.view_columns;
+CREATE OR REPLACE VIEW public.view_columns
+ AS
+ SELECT table_name,
+    column_name AS name,
+    is_nullable AS nullable,
+    data_type AS type,
+    character_maximum_length AS length
+   FROM information_schema.columns;
+
+-- View: public.view_task_list
+-- DROP VIEW public.view_task_list;
+
+CREATE OR REPLACE VIEW public.view_task_list
+ AS
+ SELECT b.userid,
+    concat(a.first_name, ' ', a.last_name) AS username,
+    b.id,
+    b.title,
+    b.description,
+    b.deadline,
+    b.status,
+    b.startedat,
+    b.completedat,
+    age(CURRENT_TIMESTAMP, b.createdat) AS ago
+   FROM users a
+     JOIN tasks b ON b.userid = a.id;

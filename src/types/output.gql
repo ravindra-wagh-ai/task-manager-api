@@ -23,5 +23,4 @@ type Task {
   username: String
   status: String
   ago: JSON
-  createdat: Date
 }

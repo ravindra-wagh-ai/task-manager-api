@@ -90,7 +90,7 @@ export default {
     }
     if (args.deadline !== undefined) {
       columns.push({
-        name: "dedline",
+        name: "deadline",
         value: args.deadline,
       });
     }
