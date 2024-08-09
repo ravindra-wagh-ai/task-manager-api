@@ -2,6 +2,7 @@ import Task from "../models/task";
 import helper from "../helper/index";
 import { GraphQLError } from "graphql";
 import jwt from "jsonwebtoken";
+
 export default async (_: any, args: { input: Task }, ctx: any): Promise<any> => {
   let state: any;
   let row:any;
@@ -26,5 +27,6 @@ export default async (_: any, args: { input: Task }, ctx: any): Promise<any> => 
       },
     });
   }
+  ctx.pubSub.publish("show", row);
   return row;
 };

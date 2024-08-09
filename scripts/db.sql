@@ -95,3 +95,29 @@ CREATE OR REPLACE VIEW public.view_task_list
     age(CURRENT_TIMESTAMP, b.createdat) AS ago
    FROM users a
      JOIN tasks b ON b.userid = a.id;
+
+-- View: public.view_audit_logs
+-- DROP VIEW public.view_audit_logs;
+CREATE VIEW view_audit_logs AS 
+    SELECT a.first_name, 
+    a.last_name, 
+    b.id, 
+	b.originator_type, 
+    b.originator, 
+    b.source, 
+    b.url, 
+    b.referer, 
+    b.type, 
+	b.method, 
+    b.device, 
+    b.browser, 
+    b.brand, 
+    b.ip, 
+    b.starttime, 
+	b.endtime, 
+    b.createdat, 
+    b.status, 
+    b.comment, 
+    b.duration
+FROM users a
+INNER JOIN auditlogs b on b.originator = a.id

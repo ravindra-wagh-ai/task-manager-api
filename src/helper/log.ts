@@ -4,6 +4,8 @@ import Insert from "../models/insert";
 import Column from "../models/column";
 import Update from "../models/update";
 import { COP } from "../models/cop";
+import Criteria from "../models/criteria";
+import Select from "../models/select";
 export default {
   add: async (row: any): Promise<string> => {
     let id: string;
@@ -54,5 +56,22 @@ export default {
       console.log(e);
     }
     return id!;
+  },
+  list: async (criteria: Criteria[]): Promise<any> => {
+    let rows: any[] = [];
+    try {
+      let columns = await data.columns("view_audit_logs");
+      let input: Select = {
+        table: "view_audit_logs",
+        columns: columns.map((x) => {
+          return { name: x.name };
+        }),
+        criteria: criteria,
+      };
+      rows = await data.select(input);
+    } catch (e) {
+      console.log(e);
+    }
+    return rows;
   },
 };

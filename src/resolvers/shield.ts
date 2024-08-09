@@ -6,6 +6,8 @@ import deleteTask from "./delete";
 import list from "./list";
 import { GraphQLError } from "graphql";
 import jwt from "jsonwebtoken";
+import logger from "./logger";
+import logs from "./logs";
 const resolvers: any[] = [
   {
     name: "add",
@@ -28,6 +30,11 @@ const resolvers: any[] = [
     include: true,
   },
   {
+    name: "logs",
+    execute: logs,
+    include: true,
+  },
+  {
     name: "signin",
     execute: signin,
     include: false,
@@ -41,6 +48,9 @@ const resolvers: any[] = [
 export default async (parent: any, args: any, ctx: any, info: any) => {
   let field: string = info.fieldName;
   let headers = ctx.req.headers;
+  let result;
+
+  let logId: string = await logger.add(ctx, field);
   let resolver = resolvers.find((x) => x.name === field);
   if (resolver.include) {
     let authorization = headers["authorization"];
@@ -68,10 +78,15 @@ export default async (parent: any, args: any, ctx: any, info: any) => {
           },
         });
       }
-
-      return await resolver.execute(parent, args, ctx, info);
+      result = await resolver.execute(parent, args, ctx, info);
     }
   } else {
-    return await resolver.execute(parent, args, ctx, info);
+    result = await resolver.execute(parent, args, ctx, info);
   }
+  if (result !== undefined) {
+    await logger.update(logId, "SUCCEED");
+  } else {
+    await logger.update(logId, "FAILED");
+  }
+  return result;
 };

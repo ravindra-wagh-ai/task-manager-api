@@ -40,3 +40,26 @@ input UpdateTask {
   deadline: Date!
   status: Status
 }
+
+input LogFilter {
+  id: String
+  first_name: String
+  last_name: String
+  originator_type: String
+  originator: Int
+  source: String
+  url: String
+  referer: String
+  type: String
+  method: String
+  device: String
+  browser: String
+  brand: String
+  ip: String
+  starttime: Date 
+  endtime: Date
+  createdat: DateFilter
+  status: String
+  comment: String
+  duration: JSON
+}
