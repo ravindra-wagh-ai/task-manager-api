@@ -3,13 +3,13 @@ import { createEnvelopQueryValidationPlugin } from "graphql-constraint-directive
 import { GraphQLError } from "graphql";
 import typeDefs from "./types/index";
 import resolvers from "./resolvers/index";
-import handler from "./handler";
+//import handler from "./handler";
 export default createYoga({
     schema: createSchema({
       typeDefs: typeDefs,
       resolvers: resolvers,
     }),
-    plugins: [handler(), createEnvelopQueryValidationPlugin()],
+    plugins: [createEnvelopQueryValidationPlugin()],
     graphqlEndpoint: "/taskapi",
     maskedErrors: {
       maskError(e) {

@@ -9,4 +9,9 @@ type Mutation {
   add(input: NewTask!): Task
   update(input: UpdateTask!): Task
   delete(id: Int!): Task
+  broadcast(num:Int): Boolean
+}
+
+type Subscription {
+  show: Int!
 }
