@@ -1,5 +1,6 @@
 import signup from "./signup";
 import signin from "./signin";
+import signout from "./signout"
 import add from "./add";
 import update from "./update";
 import deleteTask from "./delete";
@@ -8,6 +9,8 @@ import { GraphQLError } from "graphql";
 import jwt from "jsonwebtoken";
 import logger from "./logger";
 import logs from "./logs";
+import verify from "./verify";
+
 const resolvers: any[] = [
   {
     name: "add",
@@ -37,6 +40,16 @@ const resolvers: any[] = [
   {
     name: "signin",
     execute: signin,
+    include: false,
+  },
+  {
+    name: "signout",
+    execute: signout,
+    include: false,
+  },
+  {
+    name: "verify",
+    execute: verify,
     include: false,
   },
   {

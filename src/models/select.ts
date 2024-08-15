@@ -8,5 +8,5 @@ export default class Select {
   public columns?: Column[];
   public criteria?: Criteria[];
   public paging?: Paging;
-  public sorting?: Sorting;
+  public sorting?: Sorting[];
 }

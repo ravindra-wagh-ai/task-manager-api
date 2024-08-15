@@ -20,6 +20,13 @@ export default async (args: Select): Promise<any> => {
       });
       query += ` WHERE ${criteria.join(",")}`;
     }
+    if(args.sorting!== undefined){
+      query += ` ORDER BY `
+      args.sorting?.map(x=>{
+        query += ` ${x.column} ${x.order}`;
+      })
+    }
+    console.log(query);
     let result = await pgql.read(query, values);
     if (result !== undefined) {
       rows = result.rows;

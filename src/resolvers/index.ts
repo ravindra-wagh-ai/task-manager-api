@@ -4,6 +4,7 @@ const resolvers = {
     signin: shield,
     tasks: shield,
     logs: shield,
+    verify: shield,
   },
   Mutation: {
     signup: shield,

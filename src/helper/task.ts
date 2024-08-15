@@ -8,6 +8,7 @@ import Update from "../models/update";
 import Column from "../models/column";
 import { STATUS } from "../models/status";
 import Delete from "../models/delete";
+import { ORDER } from "../models/order";
 const get = async (id: number): Promise<any> => {
   let row: Object;
   try {
@@ -42,6 +43,12 @@ export default {
           return { name: x.name };
         }),
         criteria: criteria,
+        sorting: [
+          {
+            column: "createdat",
+            order: ORDER.DESC,
+          },
+        ],
       };
       rows = await data.select(input);
     } catch (e) {

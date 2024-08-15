@@ -12,7 +12,6 @@ ENV SECRET_NAME=${SECRET_NAME}
 WORKDIR /usr/src/app
 COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
 RUN npm install --production --silent && mv node_modules ../
-RUN ls -al
 COPY . .
 RUN npm i --save-dev typescript
 RUN npm run build
